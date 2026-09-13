@@ -35,11 +35,15 @@ declare const camera: uniform<Camera>
 declare let pixels: storage<array<f32>>
 
 @compute([64, 1, 1])
-export function paint() {
+export function paint(
+  @builtin("global_invocation_id") gid: vec3u
+) {
   const i = gid.x
   pixels[i] = pixels[i] + camera.pos.x
 }
 ```
+
+Builtins are explicit function inputs. TypeShade does not inject `gid`, `vid`, or `pid` as hidden globals, so a shader entry's interface is visible in its signature.
 
 The language makes the GPU boundary explicit:
 
