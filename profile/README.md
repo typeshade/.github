@@ -8,29 +8,40 @@
 
 <p align="center">
   <strong>Write shaders in TypeScript. Start with <code>"use typeshade"</code>.</strong><br>
-  TypeShade is a shader language and compiler built around the TypeScript authoring experience.
+  A shader language and compiler built around the TypeScript authoring experience.
 </p>
 
 <p align="center">
   <a href="https://typeshade.dev/guide/quick-start/">Quick start</a> ·
-  <a href="https://typeshade.dev/guide/authoring/">Language guide</a> ·
+  <a href="https://typeshade.dev/guide/language/">Language guide</a> ·
   <a href="https://typeshade.dev/guide/examples/">Examples</a> ·
-  <a href="https://github.com/typeshade/typeshade">Compiler</a>
+  <a href="https://typeshade.dev/api/">API reference</a>
 </p>
 
-## The idea
+## Start with a TypeScript file
 
-A TypeShade file looks and feels like TypeScript, but the file-level directive opts it into TypeShade's shader semantics:
+TypeShade begins at the file boundary. Add `"use typeshade"`, then write shader code using a TypeScript-shaped authoring model:
 
 ```ts
-"use typeshade";
+"use typeshade"
 
-export function fragment(uv: vec2): vec4 {
-  return vec4(uv, 0.0, 1.0);
+class Camera {
+  @align(16)
+  view: mat4
+  pos: vec3
+}
+
+declare const camera: uniform<Camera>
+declare let pixels: storage<array<f32>>
+
+@compute([64, 1, 1])
+export function paint() {
+  const i = gid.x
+  pixels[i] = pixels[i] + camera.pos.x
 }
 ```
 
-The source is lowered to a shared intermediate representation and emitted as host-consumable shader code:
+The language makes the GPU boundary explicit:
 
 ```text
 TypeScript authoring
@@ -45,19 +56,19 @@ TypeScript authoring
   WebGPU     WebGL2
 ```
 
-There is no TypeShade runtime. Your host application consumes the generated shader source.
+There is no TypeShade runtime. The host application owns pipelines, resources and rendering; TypeShade owns the language and shader emission.
 
 ## Learn TypeShade
 
-The documentation is organized around the language first:
+The documentation is organized around authoring first:
 
-- **Why TypeShade** — understand the language boundary and why shader constraints belong in authoring.
-- **Quick start** — create your first `"use typeshade"` shader.
-- **Language guide** — learn types, functions, expressions, control flow, modules and GPU-specific semantics.
-- **Examples** — see complete shader programs and their generated targets.
-- **API reference** — look up compiler and public library APIs when you already know what you need.
+1. **Introduction** — understand the relationship between TypeScript and TypeShade.
+2. **Quick start** — write your first `"use typeshade"` shader.
+3. **Language guide** — learn types, functions, control flow, GPU types, resources and shader stages.
+4. **Examples** — study complete shader programs and their generated targets.
+5. **API reference** — look up compiler APIs once you know the language surface.
 
-TypeScript knowledge is a starting point, not a prerequisite to memorizing a second completely unrelated syntax. The guide calls out what stays familiar and where TypeShade deliberately differs because of the GPU execution model.
+TypeScript is the starting point, not a second unrelated syntax to memorize. The guide explains which TypeScript concepts carry over and where TypeShade deliberately differs because GPU execution is constrained.
 
 ## Repositories
 
@@ -69,4 +80,4 @@ TypeScript knowledge is a starting point, not a prerequisite to memorizing a sec
 
 ## Status
 
-TypeShade is pre-release. The public authoring model on `main` is file-level `"use typeshade"`; package and compiler details may change while the language surface matures.
+TypeShade is pre-release. The public authoring model on `main` is file-level `"use typeshade"`; compiler internals and APIs may continue to evolve while the language surface matures.
