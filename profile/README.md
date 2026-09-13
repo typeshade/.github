@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://typeshade.dev/">
-    <img height="112" src="https://raw.githubusercontent.com/typeshade/.github/claude/ai-generated-feeling-ky0y7t/profile/favicon.svg" alt="TypeShade">
+    <img height="112" src="./favicon.svg" alt="TypeShade">
   </a>
 </p>
 
