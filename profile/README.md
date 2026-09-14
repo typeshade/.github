@@ -26,7 +26,6 @@ TypeShade begins at the file boundary. Add `"use typeshade"`, then write shader 
 "use typeshade"
 
 class Camera {
-  @align(16)
   view: mat4
   pos: vec3
 }
