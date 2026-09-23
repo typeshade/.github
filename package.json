@@ -1,0 +1,12 @@
+{
+  "name": "typeshade-github",
+  "private": true,
+  "description": "The typeshade organization profile and community files.",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}
