@@ -23,22 +23,22 @@
 TypeShade begins at the file boundary. Add `"use typeshade"`, then write shader code using a TypeScript-shaped authoring model:
 
 ```ts
-"use typeshade"
+"use typeshade";
 
 class Camera {
-  view: mat4
-  pos: vec3
+  view: mat4;
+  pos: vec3;
 }
 
-declare const camera: uniform<Camera>
-declare let pixels: storage<array<f32>>
+declare const camera: uniform<Camera>;
+declare let pixels: storage<array<f32>>;
 
 @compute([64, 1, 1])
 export function paint(
   @builtin("global_invocation_id") gid: vec3u
 ) {
-  const i = gid.x
-  pixels[i] = pixels[i] + camera.pos.x
+  const i = gid.x;
+  pixels[i] = pixels[i] + camera.pos.x;
 }
 ```
 
@@ -75,12 +75,12 @@ TypeScript is the starting point, not a second unrelated syntax to memorize. The
 
 ## Repositories
 
-| Repository | Purpose |
-| --- | --- |
-| [`typeshade`](https://github.com/typeshade/typeshade) | TypeShade language and compiler implementation |
-| [`typeshade.github.io`](https://github.com/typeshade/typeshade.github.io) | Documentation, examples, and site source |
-| [`vscode-typeshade`](https://github.com/typeshade/vscode-typeshade) | Editor support: TypeScript server plugin and VS Code extension |
-| [`.github`](https://github.com/typeshade/.github) | Organization profile and shared GitHub configuration |
+| Repository                                                                | Purpose                                                        |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [`typeshade`](https://github.com/typeshade/typeshade)                     | TypeShade language and compiler implementation                 |
+| [`typeshade.github.io`](https://github.com/typeshade/typeshade.github.io) | Documentation, examples, and site source                       |
+| [`vscode-typeshade`](https://github.com/typeshade/vscode-typeshade)       | Editor support: TypeScript server plugin and VS Code extension |
+| [`.github`](https://github.com/typeshade/.github)                         | Organization profile and shared GitHub configuration           |
 
 ## Status
 

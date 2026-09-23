@@ -1,0 +1,27 @@
+name: format
+
+# Prettier over this repository, with the settings typeshade, vscode-typeshade and the site use
+# (`semi: true`). Markdown code fences are not reformatted (.prettierrc.json): the shader example
+# in profile/README.md is written by hand, `;` included, as it is in the typeshade README.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run format:check
